@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>svg-to-poly</title>
+	<style type="text/css">
+		body {
+			background: #eee;
+		}
+		canvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+		h3 {
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			border-bottom: 2px solid;
+			display: inline;
+		}
+		a {
+			text-decoration: none;
+			color: black;
+		}
+		a:hover {
+			color: #666;
+		}
+		.info, select {
+			font-family: sans-serif;
+			font-size: 14px;
+		}
+		.info {
+			margin: 10px;
+		}
+		span {
+			display: block;
+			margin: 10px 0;
+		}
+	</style>
+</head>
+<body>
+	<canvas></canvas>
+	<div class="info">
+		<a href="https://github.com/brunoimbrizi/svg-to-poly"><h3>svg-to-poly</h3></a>
+		<span>Open the Console for the parsed object</span>
+		<select>
+			<option value="./assets/angle.svg">angle.svg</option>
+			<option value="./assets/arrow460.svg" selected>arrow460.svg</option>
+			<option value="./assets/ambulance8.svg">ambulance8.svg</option>
+			<option value="./assets/android4.svg">android4.svg</option>
+			<option value="./assets/bold14.svg">bold14.svg</option>
+			<option value="./assets/book95.svg">book95.svg</option>
+			<option value="./assets/gift49.svg">gift49.svg</option>
+			<option value="./assets/github10.svg">github10.svg</option>
+			<option value="./assets/infinity.svg">infinity.svg</option>
+			<option value="./assets/instagram.svg">instagram.svg</option>
+			<option value="./assets/keyboard13.svg">keyboard13.svg</option>
+			<option value="./assets/question23.svg">question23.svg</option>
+			<option value="./assets/vimeo.svg">vimeo.svg</option>
+			<option value="./assets/volume29.svg">volume29.svg</option>
+		</select>
+	</div>
+	<script src="bundle.js" async></script>
+</body>
+</html>

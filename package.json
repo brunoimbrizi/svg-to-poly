@@ -1,0 +1,42 @@
+{
+  "name": "svg-to-poly",
+  "version": "1.0.0",
+  "description": ".svg to .poly",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "name": "Bruno Imbrizi",
+    "url": "https://github.com/brunoimbrizi"
+  },
+  "dependencies": {
+    "extract-svg-path": "^2.1.0",
+    "parse-svg-path": "^0.1.2",
+    "point-in-polygon": "^1.0.1",
+    "polylabel": "^1.1.0",
+    "simplify-path": "^1.1.0",
+    "svg-path-contours": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "array-unflat": "^1.0.1",
+    "babelify": "^10.0.0",
+    "bound-points": "^1.0.0",
+    "browserify": "^17.0.0",
+    "load-svg": "^1.0.0",
+    "normalize-path-scale": "^2.0.0",
+    "tinyify": "^3.0.0"
+  },
+  "scripts": {
+    "demo": "budo demo/:bundle.js --live --dir demo/",
+    "build": "browserify demo/index.js -t babelify -p tinyify -o demo/bundle.js"
+  },
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brunoimbrizi/svg-to-poly.git"
+  },
+  "homepage": "https://github.com/brunoimbrizi/svg-to-poly",
+  "bugs": {
+    "url": "https://github.com/brunoimbrizi/svg-to-poly/issues"
+  }
+}
