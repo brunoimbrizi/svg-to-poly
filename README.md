@@ -11,6 +11,8 @@ An alternative output is a formatted string which could be written onto a .poly 
 
 Full description of the [.poly file format](https://www.cs.cmu.edu/~quake/triangle.poly.html).
 
+[![demo](https://user-images.githubusercontent.com/880280/98481549-f029b700-21f2-11eb-81b6-94ff71e32ae0.png)](https://brunoimbrizi.github.io/svg-to-poly/demo/)
+
 ## Install
 ```
 npm install svg-to-poly
@@ -98,7 +100,7 @@ Same as above.
 ## See Also
 
 - [Triangle - A Two-Dimensional Quality Mesh Generator and Delaunay Triangulator](https://www.cs.cmu.edu/~quake/triangle.html) - Jonathan Shewchuk
-- [poly-parse](https://github.com/brunoimbrizi/poly-parse)
+- [poly-parse](https://github.com/brunoimbrizi/poly-parse) - parse .poly into JSON
 
 
 ## License
