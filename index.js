@@ -4,14 +4,21 @@ const contours = require('svg-path-contours');
 const simplify = require('simplify-path');
 const inside = require('point-in-polygon');
 const polylabel = require('polylabel');
+const normalizePath = require('normalize-path-scale');
+const getBounds = require('bound-points');
 
-const svgToPoly = (svg) => {
+
+const svgToPoly = (svg, {
+	flat = false,
+	normalize = false,
+	threshold = 0.2,
+} = {}) => {
 	const epath = extract(svg);
 	const ppath = parse(epath);
 	const contr = contours(ppath);
 
 	const simpl = contr.map(function(c) {
-    return simplify(c, 0.2);
+    return simplify(c, threshold);
 	});
 
 	const paths = [];
@@ -48,12 +55,12 @@ const svgToPoly = (svg) => {
 		}
 
 		for (let j = 0; j < points.length - 1; j++) {
-			segments.push(k + j + 0, k + j + 1);
+			segments.push([k + j + 0, k + j + 1]);
 		}
 
 		// if closed, add segment last to first
 		if (path.closed) {
-			segments.push(k + points.length - 1, k);
+			segments.push([k + points.length - 1, k]);
 		}
 
 		k += points.length;
@@ -102,13 +109,24 @@ const svgToPoly = (svg) => {
 		winding += 2;		
 	}
 
+	let pointlist = concatenate(paths, 'points');
+	let segmentlist = concatenate(paths, 'segments');
+	let holelist = concatenate(paths, 'holes');
+	const numberofpoints = pointlist.length;
+	const numberofsegments = segmentlist.length;
+	const numberofholes = holelist.length;
 
-	const pointlist = getFlattened(paths, 'points');
-	const numberofpoints = pointlist.length * 0.5;
-	const segmentlist = getFlattened(paths, 'segments');
-	const numberofsegments = segmentlist.length * 0.5;
-	const holelist = getFlattened(paths, 'holes');
-	const numberofholes = holelist.length * 0.5;
+	if (normalize) {
+		const bounds = getBounds(pointlist);
+		normalizePath(pointlist, bounds);
+		normalizePath(holelist, bounds);
+	}
+
+	if (flat) {
+		pointlist = pointlist.flat();
+		segmentlist = segmentlist.flat();
+		holelist = holelist.flat();
+	}
 
 	return {
 		pointlist,
@@ -120,10 +138,37 @@ const svgToPoly = (svg) => {
 	};
 };
 
-const getFlattened = (paths, prop) => {
+const concatenate = (paths, prop, deep) => {
 	const flat = [];
 	paths.forEach(p => flat.push(p[prop]));
-	return flat.flat(2);
+	return flat.flat();
+};
+
+const formatStr = (svg, opt = {}) => {
+	const poly = svgToPoly(svg, { ...opt, flat: false });
+
+	let str = '';
+	str = `${str}# points\n`;
+	str = `${str}${poly.numberofpoints} 2 0 0\n`;
+	for (let i = 0; i < poly.numberofpoints; i++) {
+		str = `${str}${i} ${poly.pointlist[i][0]} ${poly.pointlist[i][1]}\n`;
+	}
+
+	str = `${str}# segments\n`;
+	str = `${str}${poly.numberofsegments} 0\n`;
+	for (let i = 0; i < poly.numberofsegments; i++) {
+		str = `${str}${i} ${poly.segmentlist[i][0]} ${poly.segmentlist[i][1]}\n`;
+	}
+
+	str = `${str}# holes\n`;
+	str = `${str}${poly.numberofholes}\n`;
+	for (let i = 0; i < poly.numberofholes; i++) {
+		str = `${str}${i} ${poly.holelist[i][0]} ${poly.holelist[i][1]}\n`;
+	}
+
+	return str;
 };
 
 module.exports = svgToPoly;
+
+module.exports.format = formatStr;

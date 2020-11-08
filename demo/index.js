@@ -1,8 +1,8 @@
 const svgToPoly = require('../index.js');
 const loadSvg = require('load-svg');
-const normalize = require('normalize-path-scale');
-const unflat = require('array-unflat');
-const getBounds = require('bound-points');
+
+// store
+let svg;
 
 // init canvas
 const canvas = document.querySelector('canvas');
@@ -17,34 +17,43 @@ select.addEventListener('change', (e) => {
 	load(e.target.value);
 });
 
+// init range
+const threshold = document.querySelector('#threshold');
+threshold.addEventListener('input', (e) => {
+	update();
+});
+
 const load = (path) => {
-	loadSvg(path, (err, svg) => {
+	loadSvg(path, (err, _svg) => {
 		if (err) throw err;
 
-		const poly = svgToPoly(svg);
-		console.log(poly);
-		draw(poly);
+		svg = _svg;
+		update(true);
 	});
 };
 
 const scale = (points, sx, sy) => {
+	if (!points) return;
+
 	for (let i = 0; i < points.length; i++) {
 		points[i][0] *= sx;
 		points[i][1] *= sy;
 	}
 };
 
-const draw = (data) => {
-	const points = unflat(data.pointlist);
-	const segments = unflat(data.segmentlist);
-	const holes = unflat(data.holelist);
-
-	const bounds = getBounds(points);
-
-	normalize(points, bounds);
-	scale(points, canvas.width * 0.4, canvas.height * 0.4);
+const update = (log = false) => {
+	const data = svgToPoly(svg, { normalize: true, threshold: parseFloat(threshold.value) });
+	draw(data);
 	
-	normalize(holes, bounds);
+	if (log) console.log(data);
+};
+
+const draw = (data) => {
+	const points = data.pointlist;
+	const segments = data.segmentlist;
+	const holes = data.holelist;
+
+	scale(points, canvas.width * 0.4, canvas.height * 0.4);
 	scale(holes, canvas.width * 0.4, canvas.height * 0.4);
 
 	ctx.fillStyle = '#eee';
