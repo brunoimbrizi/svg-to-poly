@@ -65,7 +65,7 @@ Output:
 
 ## Demo
 
-[poly-parse demo](https://brunoimbrizi.github.io/svg-to-poly/demo/)
+[svg-to-poly demo](https://brunoimbrizi.github.io/svg-to-poly/demo/)
 
 ## Usage
 
@@ -87,7 +87,7 @@ Same as above.
 
 ## Dependencies
 
-[svg-to-poly](https://github.com/brunoimbrizi/svg-to-poly) benefits from the groundwork laid by other great packages:
+**svg-to-poly** benefits from the groundwork laid by some other great packages:
 - [extract-svg-path](https://github.com/mattdesl/extract-svg-path) concatenates all `<path>` data from an SVG
 - [parse-svg-path](https://github.com/jkroso/parse-svg-path) splits paths into groups of instructions and values
 - [svg-path-contours](https://github.com/mattdesl/svg-path-contours/) converts paths into polylines
@@ -98,8 +98,7 @@ Same as above.
 ## See Also
 
 - [Triangle - A Two-Dimensional Quality Mesh Generator and Delaunay Triangulator](https://www.cs.cmu.edu/~quake/triangle.html) - Jonathan Shewchuk
-- [normalize-path-scale](https://github.com/mattdesl/normalize-path-scale)
-- [bound-points](https://github.com/mikolalysenko/bound-points)
+- [poly-parse](https://github.com/brunoimbrizi/poly-parse)
 
 
 ## License
