@@ -1,9 +1,9 @@
 svg-to-poly
 ===========
 
-Converts an SVG into a Planar Straight Line Graph conforming to .poly files from [Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
+Converts an SVG into a Planar Straight Line Graph in the .poly format from [Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
 
-The default output is a JSON using the same property names as `struct triangulateio` defined in `triangle.h` from [Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
+The default output is a JSON with the same property names as `struct triangulateio` defined in `triangle.h` from [Triangle](https://www.cs.cmu.edu/~quake/triangle.html).
 
 An alternative output is a formatted string which could be written onto a .poly file.
 
@@ -87,7 +87,7 @@ Same as above.
 
 **Returns** a string in the .poly format.
 
-## Dependencies
+## Thanks
 
 **svg-to-poly** benefits from the groundwork laid by some other great packages:
 - [extract-svg-path](https://github.com/mattdesl/extract-svg-path) concatenates all `<path>` data from an SVG

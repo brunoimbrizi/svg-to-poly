@@ -1,8 +1,9 @@
 const svgToPoly = require('../index.js');
 const loadSvg = require('load-svg');
+const opentype = require('opentype.js');
 
 // store
-let svg;
+let svg, font;
 
 // init canvas
 const canvas = document.querySelector('canvas');
@@ -17,6 +18,13 @@ select.addEventListener('change', (e) => {
 	load(e.target.value);
 });
 
+// init input text
+const elText = document.querySelector('.text');
+const inputText = document.querySelector('#text');
+inputText.addEventListener('input', (e) => {
+	updateText();
+});
+
 // init range
 const threshold = document.querySelector('#threshold');
 threshold.addEventListener('input', (e) => {
@@ -24,12 +32,28 @@ threshold.addEventListener('input', (e) => {
 });
 
 const load = (path) => {
-	loadSvg(path, (err, _svg) => {
-		if (err) throw err;
+	const isSVG = path.includes('.svg');
 
-		svg = _svg;
-		update(true);
-	});
+	// svg
+	if (isSVG) {
+		loadSvg(path, (err, _svg) => {
+			if (err) throw err;
+
+			svg = _svg;
+			update(true);
+		});
+	}
+	// font
+	else {
+		opentype.load(path, (err, _font) => {
+			if (err) throw err;
+
+			font = _font;
+			updateText(true);
+		});
+	}
+
+	elText.style.display = isSVG ? 'none' : 'block';
 };
 
 const scale = (points, sx, sy) => {
@@ -39,6 +63,13 @@ const scale = (points, sx, sy) => {
 		points[i][0] *= sx;
 		points[i][1] *= sy;
 	}
+};
+
+const updateText = (log = false) => {
+	const text = inputText.value;
+	const path = font.getPath(text, 0, 0, 120);
+	svg = path.toSVG();
+	update(log);
 };
 
 const update = (log = false) => {

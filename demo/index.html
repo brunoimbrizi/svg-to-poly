@@ -38,6 +38,9 @@
 			display: block;
 			margin: 10px 0;
 		}
+		input {
+			width: 120px;
+		}
 	</style>
 </head>
 <body>
@@ -59,11 +62,17 @@
 			<option value="./assets/question23.svg">question23.svg</option>
 			<option value="./assets/vimeo.svg">vimeo.svg</option>
 			<option value="./assets/volume29.svg">volume29.svg</option>
+			<option value="./assets/NotoSerif-Bold.ttf">NotoSerif-Bold.ttf</option>
 		</select>
 		<span>
 			<input type="range" id="threshold" name="threshold" min="0" max="1" value="0.2" step="0.05">
   		<label for="threshold">simplify threshold</label>
   	</span>
+		<span class="text">
+			<input type="text" id="text" maxlength="4" value="OE">
+  		<label for="text">text</label>
+			<span><a href="https://github.com/opentypejs/opentype.js" target="_blank">opentype.js</a> → svg</span>
+		</span>
 	</div>
 	<script src="bundle.js" async></script>
 </body>
